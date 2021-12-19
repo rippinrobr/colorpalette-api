@@ -52,10 +52,10 @@ class PigmentQuery {
   }
 
   toSearchObject(): Record<string, unknown> {
-    const mustArray = [
-      {match: {pigments: 'PBk7'}},
-      {match: {pigments: 'PR101'}},
-    ];
+    const mustArray = [];
+    this.query.bool.must.forEach((p: PigmentMatch) => {
+      mustArray.push({match: {pigments: p.match.pigments}}); 
+    });
 
     return {
       index: this.index,
@@ -85,3 +85,7 @@ export class SearchService {
     return await client.search(qry.toSearchObject());
   }
 }
+function p(p: any) {
+    throw new Error('Function not implemented.');
+}
+
