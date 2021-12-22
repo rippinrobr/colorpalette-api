@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Client } from '@elastic/elasticsearch';
 import { query } from 'express';
-const client = new Client({ node: 'http://localhost:9200' })
+import { Filters, QueryFilters } from './queryfilters.model';
 
+const client = new Client({ node: 'http://localhost:9200' });
+const INDEX_PIGMENTS = 'pigments';
 class PigmentValue {
   pigments: string;
 
@@ -83,6 +85,23 @@ export class SearchService {
     });
 
     return await client.search(qry.toSearchObject());
+  }
+
+  async getColorsByName(name: string, filters: QueryFilters): Promise<Record<string, any>> {
+    console.log("filters.hasFilters(): ",  filters.hasFilters());
+    console.dir(filters);
+      const query = {
+        index: INDEX_PIGMENTS,
+        body: {
+          query: {
+            match: {
+              name: name,
+            }
+          }
+        }
+      };
+
+      return await client.search(query);
   }
 }
 function p(p: any) {
