@@ -2,24 +2,38 @@ import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { Filters } from 'src/search/queryfilters.model';
 import { SearchService } from 'src/search/search.service';
 
+const QP_BRAND = 'brand';
+const QP_MEDIA_TYPE = 'mediaType';
+
 @Controller('pigments')
 export class PigmentsController {
   constructor(private readonly searchService: SearchService) {}
 
   @Get('/ids/:pigments')
-  async search(@Param() params, @Query('brand') brand: string, @Query('mediaType') mediaType: string): Promise<Record<string, any>> {
-    const pigmentsParamVal: string = params.pigments;
-    //  console.log(`${brand} ${mediaType}`);
-    const qfilter = new Filters(brand, mediaType);
-    // console.dir(qfilter.hasFilters());
-    return await this.searchService.getColorsByPigments(pigmentsParamVal.split(','), qfilter);
+  async search(@Param('pigments') pigments: string, @Query(QP_BRAND) brand: string, @Query(QP_MEDIA_TYPE) mediaType: string): Promise<Record<string, any>> {
+    const queryParams = new Filters(brand, mediaType);
+    const results = await this.searchService.getColorsByPigments(pigments.split(','), queryParams);
+
+    return new PigmentSearchResultsVM(results.body.hits.hits, results.body.hits.total.value, results.body.took);
   }
 
   @Get('/names/:names')
-  async searchByName(@Param('names') names: string, @Query('brand') brand: string, @Query('media') mediaType: string): Promise<Record<string, any>> {
+  async searchByName(@Param('names') names: string, @Query(QP_BRAND) brand: string, @Query(QP_MEDIA_TYPE) mediaType: string): Promise<Record<string, any>> {
     const filters = new Filters(brand, mediaType);
     const results = await this.searchService.getColorsByName(names, filters);
 
-    return {results: results.body.hits.hits, count: results.body.hits.total.value, time: results.body.took};
+    return new PigmentSearchResultsVM(results.body.hits.hits, results.body.hits.total.value, results.body.took);
+  }
+}
+
+class PigmentSearchResultsVM {
+  results: object[];
+  count: number;
+  time: number;
+
+  constructor(results: object[], count: number, time: number) {
+    this.results = results;
+    this.count = count;
+    this.time = time;
   }
 }
