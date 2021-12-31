@@ -1,27 +1,28 @@
 
 export interface QueryFilters {
-  brand?: string;
-  mediaType?: string;
-
+  getFilters(): Array<{term: object}>;
   hasFilters(): boolean;
 }
 
 export class Filters implements QueryFilters{
-  brand?: string;
-  mediaType?: string;
+  private filters = new Array<{term: Object}>();
 
   constructor(brand = '', mediaType = '') {
     if (brand !== '') {
-      this.brand = brand;
+      this.filters.push({"term": {brand: brand}});
     }
 
     if (mediaType !== '') {
-      this.mediaType = mediaType;
+      this.filters.push({"term": {mediaType: mediaType}});
     }
 
   }
+
   hasFilters(): boolean {
-      console.log(Object.keys(this))
-      return Object.keys(this).length > 0;
+      return this.filters.length > 0;
+  }
+
+  getFilters(): Array<{term: Object}> {
+    return this.filters;
   }
 }
