@@ -1,5 +1,0 @@
-{
-  "type": "sqlite",
-  "database": "./data/db/colorpalette.db",
-  "entities": ["dist/**/*.entity{.ts,.js}"]
-}
