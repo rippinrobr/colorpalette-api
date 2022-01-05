@@ -1,5 +1,5 @@
-import { Controller, Get, Param, Query, Req } from '@nestjs/common';
-import { Filters } from 'src/search/queryfilters.model';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Filters } from 'src/search/filters.model';
 import { SearchService } from 'src/search/search.service';
 
 const QP_BRAND = 'brand';

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Client } from '@elastic/elasticsearch';
-import { QueryFilters } from './queryfilters.model';
+import { QueryFilters } from './filters.model';
 
 const elasticSearchServer =  process.env.ELASTIC_SEARCH || 'http://localhost:9200';
 console.log(`Elastic Search server ${elasticSearchServer}`)
