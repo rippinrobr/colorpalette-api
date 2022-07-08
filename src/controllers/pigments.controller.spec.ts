@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PigmentsController } from './pigments.controller';
-import { SearchService } from '../search/search.service';
+import { SearchService } from '../elastic-search/search.service';
 
 describe('PigmentsController', () => {
   let app: TestingModule;

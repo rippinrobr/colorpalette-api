@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { PigmentsController } from './controllers/pigments.controller';
-import { SearchService } from './search/search.service';
+import { SearchService } from './elastic-search/search.service';
+import { SearchModule } from './search/search.module';
 
 @Module({
-  imports: [],
+  imports: [SearchModule],
   controllers: [PigmentsController],
   providers: [SearchService],
 })

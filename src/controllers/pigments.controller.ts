@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { Filters } from 'src/search/filters.model';
-import { SearchService } from 'src/search/search.service';
+import { Filters } from 'src/elastic-search/filters.model';
+import { SearchService } from 'src/elastic-search/search.service';
 
 const QP_BRAND = 'brand';
 const QP_MEDIA_TYPE = 'mediaType';

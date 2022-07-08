@@ -24,11 +24,14 @@
     "@nestjs/common": "^8.1.1",
     "@nestjs/core": "^8.1.1",
     "@nestjs/platform-express": "^8.4.6",
+    "@nestjs/typeorm": "^8.1.0",
     "@types/elasticsearch": "^5.0.40",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.4.0",
-    "typeor": "^1.2.0"
+    "sqlite": "^4.1.1",
+    "typeor": "^1.2.0",
+    "typeorm": "^0.3.6"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.1.3",
